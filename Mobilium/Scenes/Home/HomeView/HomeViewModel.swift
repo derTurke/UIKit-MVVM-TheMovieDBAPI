@@ -96,4 +96,11 @@ final class HomeViewModel {
     public func currentPage(pageControl: UIPageControl, indexPath: IndexPath) {
         pageControl.currentPage = indexPath.row
     }
+    
+    public func fetchRemoveAll(){
+        nowPlaying.removeAll()
+        upcoming.removeAll()
+        nowPlayingPage = 1
+        upcomingPage = 1
+    }
 }

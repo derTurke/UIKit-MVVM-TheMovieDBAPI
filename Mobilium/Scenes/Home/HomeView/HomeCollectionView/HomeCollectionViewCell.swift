@@ -17,7 +17,7 @@ final class HomeCollectionViewCell: UICollectionViewCell {
     
     private var movieDescription: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12, weight: .medium)
+        label.font = UIFont(name: "SFProText-Semibold", size: 12)
         label.textColor = .white
         label.numberOfLines = 2
         return label
@@ -25,8 +25,9 @@ final class HomeCollectionViewCell: UICollectionViewCell {
     
     private var movieTitle: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont(name: "SFProDisplay-Bold", size: 20)
         label.textColor = .white
+        label.numberOfLines = 0
         return label
     }()
     
@@ -79,7 +80,7 @@ final class HomeCollectionViewCell: UICollectionViewCell {
         }
         DispatchQueue.main.async {
             self.movieImage.kf.setImage(with: imageUrl)
-            self.movieTitle.text = nowPlaying.title
+            self.movieTitle.text = "\(String(describing: nowPlaying.title ?? "")) (\(Helpers.shared.dateFormat(nowPlaying.release_date, format: "yyyy")))"
             self.movieDescription.text = nowPlaying.overview
         }
     }

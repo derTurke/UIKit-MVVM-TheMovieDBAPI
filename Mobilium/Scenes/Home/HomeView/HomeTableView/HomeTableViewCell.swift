@@ -23,14 +23,15 @@ final class HomeTableViewCell: UITableViewCell {
     
     private var movieTitle: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.font = UIFont(name: "SFProText-Bold", size: 15)
         label.textColor = .black
+        label.numberOfLines = 0
         return label
     }()
     
     private var movieDescription: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = UIFont(name: "SFProText-Semibold", size: 13)
         label.numberOfLines = 2
         label.textColor = .gray
         return label
@@ -38,7 +39,7 @@ final class HomeTableViewCell: UITableViewCell {
     
     private var movieDate: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12, weight: .medium)
+        label.font = UIFont(name: "SFProText-Semibold", size: 12)
         label.textColor = .gray
         return label
     }()
@@ -85,7 +86,6 @@ final class HomeTableViewCell: UITableViewCell {
             make.top.equalTo(24)
             make.left.equalTo(movieImage.snp.right).offset(8)
             make.right.equalTo(-44)
-            make.height.equalTo(20)
         }
     }
     private func movieDescriptionConstraints() {
@@ -93,7 +93,6 @@ final class HomeTableViewCell: UITableViewCell {
             make.top.equalTo(movieTitle.snp.bottom).offset(8)
             make.left.equalTo(movieImage.snp.right).offset(8)
             make.right.equalTo(-44)
-            make.height.equalTo(36)
         }
     }
     private func movieDateConstraints() {
@@ -119,9 +118,9 @@ final class HomeTableViewCell: UITableViewCell {
         }
         DispatchQueue.main.async {
             self.movieImage.kf.setImage(with: imageUrl)
-            self.movieTitle.text = upcoming.title
+            self.movieTitle.text = "\(String(describing: upcoming.title ?? "")) (\(Helpers.shared.dateFormat(upcoming.release_date, format: "yyyy")))"
             self.movieDescription.text = upcoming.overview
-            self.movieDate.text = upcoming.release_date
+            self.movieDate.text = Helpers.shared.dateFormat(upcoming.release_date, format: "dd.MM.yyyy")
         }
     }
     

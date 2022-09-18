@@ -49,7 +49,6 @@ final class HomeViewController: UIViewController {
     
     private func viewConfigure() {
         view.backgroundColor = .white
-        navigationController?.navigationBar.isHidden = true
         view.addSubview(tableView)
         tableView.addSubview(headerView)
     }
@@ -91,6 +90,7 @@ final class HomeViewController: UIViewController {
     }
     
     @objc private func didPullToRefresh() {
+        homeViewModel.fetchRemoveAll()
         fetch()
     }
     

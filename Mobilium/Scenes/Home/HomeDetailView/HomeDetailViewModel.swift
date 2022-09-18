@@ -23,10 +23,10 @@ final class HomeDetailViewModel {
                     }
                     DispatchQueue.main.async {
                         image.kf.setImage(with: imageUrl)
-                        navigationTitle.text = movie.title
+                        navigationTitle.text = "\(String(describing: movie.title ?? "")) (\(Helpers.shared.dateFormat(movie.release_date, format: "yyyy")))"
                         point.text = String(format: "%.1f", Double(movie.vote_average ?? 0))
-                        date.text = movie.release_date
-                        title.text = movie.title
+                        date.text = Helpers.shared.dateFormat(movie.release_date, format: "dd.MM.yyyy")
+                        title.text = "\(String(describing: movie.title ?? "")) (\(Helpers.shared.dateFormat(movie.release_date, format: "yyyy")))"
                         description.text = movie.overview
                     }
                 case .failure(_):

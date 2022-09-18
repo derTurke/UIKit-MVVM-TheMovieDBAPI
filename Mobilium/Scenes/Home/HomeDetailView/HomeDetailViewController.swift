@@ -34,8 +34,9 @@ final class HomeDetailViewController: UIViewController{
     
     private var navigationTitle: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 15, weight: .bold)
+        label.font = UIFont(name: "SFProText-Bold", size: 15)
         label.textColor = .black
+        label.numberOfLines = 0
         return label
     }()
     
@@ -63,14 +64,14 @@ final class HomeDetailViewController: UIViewController{
     
     private var pointLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = UIFont(name: "SFProText-Semibold", size: 13)
         label.textColor = .black
         return label
     }()
     
     private let pointTenLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = UIFont(name: "SFProText-Semibold", size: 13)
         label.textColor = .darkGray
         label.text = "/10"
         return label
@@ -78,13 +79,13 @@ final class HomeDetailViewController: UIViewController{
     
     private let circleBox: UIView = {
         let view = UIView()
-        view.backgroundColor = .yellow
+        view.backgroundColor = UIColor(named: "imdb-color")
         return view
     }()
     
     private var movieDate: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 13, weight: .medium)
+        label.font = UIFont(name: "SFProText-Semibold", size: 13)
         label.textColor = .black
         return label
     }()
@@ -98,14 +99,15 @@ final class HomeDetailViewController: UIViewController{
     
     private var movieTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont(name: "SFProDisplay-Bold", size: 20)
         label.textColor = .black
+        label.numberOfLines = 0
         return label
     }()
     
     private var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 15, weight: .regular)
+        label.font = UIFont(name: "SFProText-Regular", size: 15)
         label.textColor = .black
         label.numberOfLines = 0
         return label
