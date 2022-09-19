@@ -15,11 +15,14 @@ final class HomeViewModel {
     private var upcomingPage = 1
     private var nowPlayingPage = 1
     
-    public func getNowPlayingMovies(_ collectionView: UICollectionView, pageControl: UIPageControl){
+    public func getNowPlayingMovies(_ collectionView: UICollectionView, pageControl: UIPageControl, pullRefresh: Bool){
         Webservice.shared.getNowPlayingMovies(page: nowPlayingPage) { response in
             switch response {
                 case .success(let nowPlaying):
                     DispatchQueue.main.async {
+                        if pullRefresh {
+                            self.nowPlaying.removeAll()
+                        }
                         self.nowPlaying.append(contentsOf: nowPlaying.results ?? [])
                         pageControl.numberOfPages = self.nowPlaying.count
                         collectionView.reloadData()
@@ -30,17 +33,19 @@ final class HomeViewModel {
         }
     }
     
-    public func getUpcomingMovies(_ tableView: UITableView){
+    public func getUpcomingMovies(_ tableView: UITableView, pullRefresh: Bool){
         Webservice.shared.getUpcomingMovies(page: upcomingPage) { response in
             switch response {
                 case .success(let upcoming):
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    tableView.refreshControl?.endRefreshing()
-                }
                     DispatchQueue.main.async {
+                        if pullRefresh {
+                            self.upcoming.removeAll()
+                        }
                         self.upcoming.append(contentsOf: upcoming.results ?? [])
                         tableView.reloadData()
+                        tableView.refreshControl?.endRefreshing()
                     }
+                    
                 case .failure(_):
                     break;
             }
@@ -82,14 +87,14 @@ final class HomeViewModel {
     public func paginationNowPlaying(_ collectionView: UICollectionView,indexPath: IndexPath, pageControl: UIPageControl) {
         if indexPath.row == nowPlaying.count - 1 {
             increaseNowPlayingPage()
-            getNowPlayingMovies(collectionView, pageControl: pageControl)
+            getNowPlayingMovies(collectionView, pageControl: pageControl, pullRefresh: false)
         }
     }
     
     public func paginationUpComing(_ tableView: UITableView,indexPath: IndexPath) {
         if indexPath.row == upcoming.count - 1 {
             increaseUpcomingPage()
-            getUpcomingMovies(tableView)
+            getUpcomingMovies(tableView, pullRefresh: false)
         }
     }
     
@@ -97,9 +102,7 @@ final class HomeViewModel {
         pageControl.currentPage = indexPath.row
     }
     
-    public func fetchRemoveAll(){
-        nowPlaying.removeAll()
-        upcoming.removeAll()
+    public func fetchRefresh(){
         nowPlayingPage = 1
         upcomingPage = 1
     }

@@ -42,7 +42,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewConfigure()
-        fetch()
+        fetch(pullRefresh: false)
         tableViewConfigure()
         collectionViewConfigure()
     }
@@ -58,9 +58,9 @@ final class HomeViewController: UIViewController {
         headerView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 256)
     }
 
-    private func fetch() {
-        homeViewModel.getUpcomingMovies(tableView)
-        homeViewModel.getNowPlayingMovies(collectionView, pageControl: pageControl)
+    private func fetch(pullRefresh: Bool) {
+        homeViewModel.getUpcomingMovies(tableView, pullRefresh: pullRefresh)
+        homeViewModel.getNowPlayingMovies(collectionView, pageControl: pageControl, pullRefresh: pullRefresh)
     }
     
     private func tableViewConfigure() {
@@ -90,8 +90,8 @@ final class HomeViewController: UIViewController {
     }
     
     @objc private func didPullToRefresh() {
-        homeViewModel.fetchRemoveAll()
-        fetch()
+        homeViewModel.fetchRefresh()
+        fetch(pullRefresh: true)
     }
     
     private func collectionViewConfigure() {
